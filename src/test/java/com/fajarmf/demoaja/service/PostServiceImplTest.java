@@ -23,6 +23,15 @@ class PostServiceImplTest {
 
     @Test
     void getAllPosts_shouldSuccess_whenThereIsAtLeastOnePost() {
+        List<Post> postList = new ArrayList<>();
+        Post firstPost = new Post();
+        firstPost.setTitle("Test");
+        firstPost.setSlug("/test-post");
+        firstPost.setBody("Hari ini aku senang sekali bisa bertemu denganmu</br>Karena kamu ada di sisiku <3</br>Kamu adalah matahariku <3</br>");
+        postList.add(firstPost);
+        when(repository.findAll()).thenReturn(postList);
+        List<Post> result = service.getAllPosts();
+        assertEquals(postList, result);
     }
 
     @Test
