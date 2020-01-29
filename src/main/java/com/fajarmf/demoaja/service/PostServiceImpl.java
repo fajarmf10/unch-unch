@@ -2,11 +2,12 @@ package com.fajarmf.demoaja.service;
 
 import com.fajarmf.demoaja.entity.Post;
 import com.fajarmf.demoaja.repository.PostRepository;
+import com.fajarmf.demoaja.SlugAndTitle;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class PostServiceImpl implements PostService {
@@ -20,12 +21,13 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public Post getPostUsingSlug(String slug) {
-        return null;
+        return repository.getPostBySlug(slug);
     }
 
     @Override
-    public Post createNewPost(Post post) {
-        return null;
+    public String createNewPost(Post post) {
+        Post resultPost = repository.save(post);
+        return resultPost.getSlug();
     }
 
     @Override
@@ -36,5 +38,11 @@ public class PostServiceImpl implements PostService {
     @Override
     public String deletePost(String postId) {
         return null;
+    }
+
+    public List<Post> getAllPostsBasedOnSlugAndTitles(List<SlugAndTitle> slugAndTitles) {
+        return slugAndTitles.stream()
+                .map(slugAndTitle -> repository.getPostBySlugAndTitle(slugAndTitle.getSlug(), slugAndTitle.getTitle()))
+                .collect(Collectors.toList());
     }
 }

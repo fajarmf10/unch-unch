@@ -8,7 +8,7 @@ import java.util.Map;
 public interface PostService {
     List<Post> getAllPosts();
     Post getPostUsingSlug(String slug);
-    Post createNewPost(Post post);
+    String createNewPost(Post post);
     Post updatePost(Long postId, Post post);
     String deletePost(String postId);
 }

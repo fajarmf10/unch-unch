@@ -32,7 +32,7 @@ class PostServiceImplTest {
     private Post firstPost;
     private Post secondPost;
 
-    @BeforeTestExecution
+    @BeforeEach
     public void setUp() {
         postList = new ArrayList<>();
         firstPost = new Post();
@@ -73,7 +73,12 @@ class PostServiceImplTest {
     }
 
     @Test
-    void createNewPost() {
+    @DisplayName("Should successfully created the post and returns the slug")
+    void createNewPost_shouldSuccessfullyCreatedThePost_whenTheRequestIsCorrect() {
+        when(repository.save(any(Post.class))).thenReturn(firstPost);
+        String result = service.createNewPost(firstPost);
+        assertNotNull(result);
+        assertEquals("test-post", result);
     }
 
     @Test
