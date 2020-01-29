@@ -15,7 +15,7 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public List<Post> getAllPosts() {
-        return null;
+        return repository.findAll();
     }
 
     @Override

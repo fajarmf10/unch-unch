@@ -6,11 +6,14 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.dao.EmptyResultDataAccessException;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.when;
 
 @SpringBootTest
@@ -36,7 +39,10 @@ class PostServiceImplTest {
 
     @Test
     void getAllPosts_shouldThrow_whenThereIsNoPost() {
-
+        when(repository.findAll()).thenThrow(new EmptyResultDataAccessException("Alah ngethow mulu", 1));
+        assertThrows(EmptyResultDataAccessException.class, () -> {
+            service.getAllPosts();
+        });
     }
 
     @Test
